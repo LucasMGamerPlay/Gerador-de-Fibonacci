@@ -1,0 +1,19 @@
+{
+  "name": "fibonacci-interface",
+  "version": "1.0.0",
+  "description": "Interface Node.js para o gerador de Fibonacci",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test src/fibonacci.test.js"
+  },
+  "keywords": ["fibonacci", "express", "interface"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

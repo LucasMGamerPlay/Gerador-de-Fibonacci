@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fibonacci · Interface Node</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">Proporção áurea · F₀ = 0 · F₁ = 1</p>
+        <h1>Gerador de Fibonacci</h1>
+        <p class="lede">
+          Interface Node para calcular um termo, gerar a sequência, verificar
+          se um número pertence à série de Fibonacci, usar a calculadora e
+          consultar a tabela periódica.
+        </p>
+      </header>
+
+      <section class="panel">
+        <nav class="tabs" role="tablist">
+          <button class="tab is-active" data-tab="termo" type="button">Termo</button>
+          <button class="tab" data-tab="sequencia" type="button">Sequência</button>
+          <button class="tab" data-tab="verificar" type="button">Verificar</button>
+          <button class="tab" data-tab="calculadora" type="button">Calculadora</button>
+          <button class="tab" data-tab="tabela" type="button">Tabela periódica</button>
+        </nav>
+
+        <form id="form-termo" class="form is-visible" data-panel="termo">
+          <label for="n-termo">Índice n</label>
+          <div class="row">
+            <input id="n-termo" name="n" type="number" min="0" max="2000" value="10" required />
+            <button type="submit">Calcular F<sub>n</sub></button>
+          </div>
+          <p class="hint">Aceita de 0 a 2000. O resultado usa BigInt para números grandes.</p>
+        </form>
+
+        <form id="form-sequencia" class="form" data-panel="sequencia">
+          <label for="qtd">Quantidade de termos</label>
+          <div class="row">
+            <input id="qtd" name="quantidade" type="number" min="0" max="2000" value="12" required />
+            <button type="submit">Gerar sequência</button>
+          </div>
+          <p class="hint">Começa em F₀. Exemplo: 8 termos → 0, 1, 1, 2, 3, 5, 8, 13.</p>
+        </form>
+
+        <form id="form-verificar" class="form" data-panel="verificar">
+          <label for="valor">Número</label>
+          <div class="row">
+            <input id="valor" name="valor" type="text" inputmode="numeric" value="21" required />
+            <button type="submit">Verificar</button>
+          </div>
+          <p class="hint">Informa se o valor informado aparece na sequência.</p>
+        </form>
+
+        <div id="painel-calculadora" class="form calc-wrap" data-panel="calculadora">
+          <div class="calc" role="application" aria-label="Calculadora">
+            <div class="calc-display">
+              <span id="calc-expr" class="calc-expr" aria-live="polite"></span>
+              <output id="calc-value" class="calc-value" aria-live="polite">0</output>
+            </div>
+            <div class="calc-keys">
+              <button type="button" class="calc-key calc-key-fn" data-action="clear">AC</button>
+              <button type="button" class="calc-key calc-key-fn" data-action="sign">±</button>
+              <button type="button" class="calc-key calc-key-fn" data-action="percent">%</button>
+              <button type="button" class="calc-key calc-key-op" data-op="/">÷</button>
+
+              <button type="button" class="calc-key" data-digit="7">7</button>
+              <button type="button" class="calc-key" data-digit="8">8</button>
+              <button type="button" class="calc-key" data-digit="9">9</button>
+              <button type="button" class="calc-key calc-key-op" data-op="*">×</button>
+
+              <button type="button" class="calc-key" data-digit="4">4</button>
+              <button type="button" class="calc-key" data-digit="5">5</button>
+              <button type="button" class="calc-key" data-digit="6">6</button>
+              <button type="button" class="calc-key calc-key-op" data-op="-">−</button>
+
+              <button type="button" class="calc-key" data-digit="1">1</button>
+              <button type="button" class="calc-key" data-digit="2">2</button>
+              <button type="button" class="calc-key" data-digit="3">3</button>
+              <button type="button" class="calc-key calc-key-op" data-op="+">+</button>
+
+              <button type="button" class="calc-key calc-key-zero" data-digit="0">0</button>
+              <button type="button" class="calc-key" data-action="dot">.</button>
+              <button type="button" class="calc-key calc-key-fn" data-action="back">⌫</button>
+              <button type="button" class="calc-key calc-key-eq" data-action="equals">=</button>
+            </div>
+          </div>
+          <p class="hint">Soma, subtração, multiplicação, divisão e porcentagem. Aceita teclado.</p>
+        </div>
+
+        <div id="painel-tabela" class="form tabela-wrap" data-panel="tabela">
+          <div class="tabela-toolbar">
+            <label class="sr-only" for="tabela-busca">Buscar elemento</label>
+            <input
+              id="tabela-busca"
+              type="search"
+              placeholder="Buscar por nome, símbolo ou número…"
+              autocomplete="off"
+            />
+          </div>
+          <div class="tabela-legenda" id="tabela-legenda" role="list"></div>
+          <div class="tabela-scroll">
+            <div
+              class="tabela-periodica"
+              id="tabela-periodica"
+              role="grid"
+              aria-label="Tabela periódica dos elementos"
+            ></div>
+          </div>
+          <aside class="elemento-ficha" id="elemento-ficha" aria-live="polite">
+            <p class="ficha-vazio">Selecione um elemento para ver número atômico, massa e classificação.</p>
+          </aside>
+          <p class="hint">118 elementos. Clique numa categoria da legenda para filtrar.</p>
+        </div>
+      </section>
+
+      <section id="resultado" class="result" hidden>
+        <div class="result-head">
+          <h2 id="resultado-titulo">Resultado</h2>
+          <span id="resultado-meta" class="meta"></span>
+        </div>
+        <p id="resultado-valor" class="value"></p>
+        <div id="resultado-chips" class="chips" hidden></div>
+      </section>
+
+      <p id="erro" class="error" hidden></p>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
